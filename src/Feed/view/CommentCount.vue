@@ -1,27 +1,17 @@
 <script setup>
-import { ref } from 'vue'
-import { useProduct } from '../../composables/useProduct'
+import { inject, computed } from 'vue'
+import { useToggleCount } from '@/composables/useToggleCount.js'
 
-const { product } = useProduct()
+const product = inject('product')
 
-const count = ref(product?.meta?.comment || 0)
-const isActive = ref(false)
-
-const handleClick = () => {
-  if (isActive.value) {
-    count.value--
-    isActive.value = false
-  } else {
-    count.value++
-    isActive.value = true
-  }
-}
+const baseValue = computed(() => product.value?.meta?.comment || 0)
+const { count, isActive, toggle } = useToggleCount(baseValue)
 </script>
 <template>
   <div
     class="flex gap-3 cursor-pointer select-none transition-all hover:scale-110"
     :class="{ 'text-blue-500': isActive }"
-    @click="handleClick"
+    @click="toggle"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

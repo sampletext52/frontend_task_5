@@ -1,15 +1,13 @@
 <script setup>
+import { inject } from 'vue'
 import CommentCount from './view/CommentCount.vue'
 import LikeCount from './view/LikeCount.vue'
 import ViewCount from './view/ViewCount.vue'
-import { useProduct } from '../composables/useProduct'
 
-const { product, purchaseProduct } = useProduct()
+const purchaseProduct = inject('purchaseProduct')
 
 const onKupit = () => {
-  if (purchaseProduct && product) {
-    purchaseProduct(product.id)
-  }
+  purchaseProduct()
 }
 </script>
 <template>

@@ -1,23 +1,34 @@
 <script setup>
-import { provide, inject } from 'vue'
+import { provide, computed, readonly } from 'vue'
 import FeedType from './FeedType.vue'
+import { useProductsStore } from '../stores/products'
 
 const props = defineProps({
-  product: Object,
+  productId: {
+    type: Number,
+    required: true,
+  },
 })
 
-const purchaseProduct = inject('purchaseProduct', null)
+const productsStore = useProductsStore()
 
-// Provide product and purchase function to child components
-provide('product', props.product)
+const product = computed(() => {
+  return productsStore.products.find((p) => p.id === props.productId)
+})
+
+const purchaseProduct = () => {
+  productsStore.purchaseProduct(props.productId)
+}
+
+provide('product', readonly(product))
 provide('purchaseProduct', purchaseProduct)
 </script>
 <template>
   <div class="border p-3">
     <div class="border p-5 mb-2">
-      <p v-if="props.product.price" class="text-gray-light text-sm">Цена: {{ props.product.price }}</p>
-      <p v-if="props.product.purchase_date" class="text-gray-light text-sm">
-        Дата покупки: {{ props.product.purchase_date }}
+      <p v-if="product?.price" class="text-gray-light text-sm">Цена: {{ product.price }}</p>
+      <p v-if="product?.purchase_date" class="text-gray-light text-sm">
+        Дата покупки: {{ product.purchase_date }}
       </p>
     </div>
 

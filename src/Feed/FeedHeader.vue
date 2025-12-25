@@ -1,7 +1,7 @@
 <script setup>
-import { useProduct } from '../composables/useProduct'
+import { inject } from 'vue'
 
-const { product } = useProduct()
+const product = inject('product')
 </script>
 <template>
   <div class="text-sm">
