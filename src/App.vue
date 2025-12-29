@@ -11,7 +11,7 @@ const productsStore = useProductsStore()
     <HeaderApp />
 
     <div class="grid grid-cols-2 gap-6">
-      <FeedNode v-for="product in productsStore.products" :key="product.id" :product-id="product.id" />
+      <FeedNode v-for="product in productsStore.products" :key="product.id" :product="product" />
     </div>
   </div>
 </template>

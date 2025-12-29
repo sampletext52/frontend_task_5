@@ -4,23 +4,19 @@ import FeedType from './FeedType.vue'
 import { useProductsStore } from '../stores/products'
 
 const props = defineProps({
-  productId: {
-    type: Number,
+  product: {
+    type: Object,
     required: true,
   },
 })
 
 const productsStore = useProductsStore()
 
-const product = computed(() => {
-  return productsStore.products.find((p) => p.id === props.productId)
-})
-
 const purchaseProduct = () => {
-  productsStore.purchaseProduct(props.productId)
+  productsStore.purchaseProduct(props.product)
 }
 
-provide('product', readonly(product))
+provide('product', readonly(computed(() => props.product)))
 provide('purchaseProduct', purchaseProduct)
 </script>
 <template>

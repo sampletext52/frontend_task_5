@@ -46,8 +46,7 @@ export const useProductsStore = defineStore('products', () => {
   )
 
   // Actions
-  const purchaseProduct = (id) => {
-    const product = products.value.find((i) => i.id == id)
+  const purchaseProduct = (product) => {
     if (product) {
       purchased.value.push({ ...product })
     }
